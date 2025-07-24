@@ -45,9 +45,9 @@ Now, create a database, a user and then grant the user to that database
 sudo -u postgres psql # enter into postgresql
 ```
 ```sql
-CREATE DATABASE drf_db;
-CREATE USER drf_user WITH PASSWORD 'password';
-GRANT ALL PRIVILEGES ON DATABASE drf_db TO drf_user;
+CREATE DATABASE learn_drf_db;
+CREATE USER learn_drf_user WITH PASSWORD 'password';
+GRANT ALL PRIVILEGES ON DATABASE learn_drf_db TO learn_drf_user;
 ```
 
 Update Django Settings to Use PostgreSQL in our `django_rest_framework/settings.py`
