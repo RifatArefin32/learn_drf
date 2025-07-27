@@ -100,3 +100,14 @@ def product_info(request):
         'min_price': products.aggregate(min_price=Min('price'))['min_price']
     })
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# User order list
+# Class based view
+class UserOrderListApiView(generics.ListAPIView):
+    queryset = Order.objects.prefetch_related('items', 'items__product').all()
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(user=self.request.user)

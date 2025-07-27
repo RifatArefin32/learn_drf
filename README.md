@@ -6,3 +6,4 @@
 - [Create dummy and fake date](/notes/5_populate_data.md)
 - [Django Silk Profiling](/notes/6_django_silk.md)
 - [Django query optimiztion](/notes/7_django_query_optimization.md)
+- [Create super user in Django](/notes/8_create_super_user.md)
