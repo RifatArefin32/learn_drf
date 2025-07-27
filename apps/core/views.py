@@ -24,8 +24,16 @@ def product_details(request, id):
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+# Product list with django shortcut
 @api_view(['GET'])
 def product_list_with_shortcut(request):
     products = get_list_or_404(Product)
     serializer = ProductSerailizer(products, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+# Product details with django shortcut
+@api_view(['GET'])
+def product_details_with_shortcut(request, id):
+    product = get_object_or_404(Product, pk=id)
+    serializer = ProductSerailizer(product)
     return Response(serializer.data, status=status.HTTP_200_OK)
