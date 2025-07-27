@@ -16,9 +16,23 @@ def product_list(request):
 
 # Class based view
 class ProductListApiView(generics.ListAPIView):
-    queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = []
+
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        min_price = self.request.query_params.get('min_price')
+        max_price = self.request.query_params.get('max_price')
+        min_stock = self.request.query_params.get('min_stock')
+
+        if min_price:
+            queryset = queryset.filter(price__gte = min_price)
+        if max_price:
+            queryset = queryset.filter(price__lte = max_price)
+        if min_stock:
+            queryset = queryset.filter(stock__gte = min_stock)
+        
+        return queryset
 
 
 # Product details
