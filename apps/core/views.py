@@ -2,14 +2,14 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from apps.core.models import Product
-from apps.core.serializers import ProductSerailizer
+from apps.core.models import Product, Order
+from apps.core.serializers import ProductSerializer, OrderSerializer
 
 # List of products
 @api_view(['GET'])
 def product_list(request):
     products = Product.objects.all()
-    serializer = ProductSerailizer(products, many=True)
+    serializer = ProductSerializer(products, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 # Product details
@@ -17,7 +17,7 @@ def product_list(request):
 def product_details(request, id):
     try:
         product = Product.objects.get(pk=id) 
-        serializer = ProductSerailizer(product)
+        serializer = ProductSerializer(product)
         return Response(serializer.data, status=status.HTTP_200_OK)
     except Product.DoesNotExist:
         return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
@@ -28,12 +28,19 @@ def product_details(request, id):
 @api_view(['GET'])
 def product_list_with_shortcut(request):
     products = get_list_or_404(Product)
-    serializer = ProductSerailizer(products, many=True)
+    serializer = ProductSerializer(products, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 # Product details with django shortcut
 @api_view(['GET'])
 def product_details_with_shortcut(request, id):
     product = get_object_or_404(Product, pk=id)
-    serializer = ProductSerailizer(product)
+    serializer = ProductSerializer(product)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+# Show all orders
+@api_view(["GET"])
+def order_list(request):
+    orders = Order.objects.all()
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)
