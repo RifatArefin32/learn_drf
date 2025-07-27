@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -24,3 +24,8 @@ def product_details(request, id):
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+@api_view(['GET'])
+def product_list_with_shortcut(request):
+    products = get_list_or_404(Product)
+    serializer = ProductSerailizer(products, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
