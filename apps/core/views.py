@@ -2,6 +2,7 @@ from django.db.models import Max, Min
 from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from apps.core.models import Product, Order
 from apps.core.serializers import ProductSerializer, OrderSerializer, ProducrtInfoSerializer
@@ -107,6 +108,7 @@ def product_info(request):
 class UserOrderListApiView(generics.ListAPIView):
     queryset = Order.objects.prefetch_related('items', 'items__product').all()
     serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         qs = super().get_queryset()
