@@ -8,6 +8,7 @@ urlpatterns = [
     # path('products/<int:id>/', views.product_details),
     path('products/<int:id>/', views.ProductDetailApiView.as_view()),
     path('products_shortcut/<int:id>/', views.product_details_with_shortcut),
-    path('orders/', views.order_list),
+    # path('orders/', views.order_list),
+    path('orders/', views.OrderListApiView.as_view()),
     path('product_info/', views.product_info),
 ]
