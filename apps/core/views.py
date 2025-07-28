@@ -4,6 +4,7 @@ from rest_framework import status, generics
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from apps.core.models import Product, Order
 from apps.core.serializers import ProductSerializer, OrderSerializer, ProducrtInfoSerializer
 
@@ -101,6 +102,19 @@ def product_info(request):
         'min_price': products.aggregate(min_price=Min('price'))['min_price']
     })
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+# class based view
+class ProductInfoApiView(APIView):
+    def get(self, request):
+        products = Product.objects.all()
+        serializer = ProducrtInfoSerializer({
+            'products': products,
+            'count': len(products),
+            'max_price': products.aggregate(max_price=Max('price'))['max_price'],
+            'min_price': products.aggregate(min_price=Min('price'))['min_price']
+        })
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 
 # User order list
