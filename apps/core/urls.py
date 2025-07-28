@@ -5,11 +5,9 @@ urlpatterns = [
     # path('products/', views.product_list),
     path('products/', views.ProductListApiView.as_view()),
     path('products_shortcut/', views.product_list_with_shortcut),
-    # path('products/<int:id>/', views.product_details),
     path('products/<int:id>/', views.ProductDetailApiView.as_view()),
     path('products_shortcut/<int:id>/', views.product_details_with_shortcut),
-    # path('orders/', views.order_list),
     path('orders/', views.OrderListApiView.as_view()),
-    path('product_info/', views.product_info),
+    path('product_info/', views.ProductInfoApiView.as_view()),
     path('user-orders/', views.UserOrderListApiView.as_view()),
 ]
