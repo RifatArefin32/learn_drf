@@ -41,8 +41,12 @@ class ProductListApiView(generics.ListAPIView):
 class ProductCreateApiView(generics.CreateAPIView):
     model = Product
     serializer_class = ProductSerializer
-    def create():
-        
+
+# Create product list create api view
+class ProductListCreateApiView(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer 
+
 
 # Product details
 # Function based view
